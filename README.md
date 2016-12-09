@@ -1,4 +1,4 @@
-# Chrome Environs
+# Chrome Envious
 Run test environments against local resources. Redirects requests for resources to `localhost`. Useful when you want to run local JS and CSS against a deployed environment. 
 
 ![](https://media.giphy.com/media/C0Q6ghc3txKus/giphy.gif)
