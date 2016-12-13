@@ -8,7 +8,6 @@ chrome.storage.sync.get({
     chrome.webRequest.onHeadersReceived.addListener(
         info => {
             const redirectUrl = info.url.replace(match, replace)
-            console.log(`redirecting to: ${redirectUrl}`)
 
             return { redirectUrl }
         },
@@ -20,10 +19,11 @@ chrome.storage.sync.get({
 
     chrome.webRequest.onHeadersReceived.addListener(
         info => {
-            info.responseHeaders.push(
+            const responseHeaders = info.responseHeaders
+
+            responseHeaders.push(
                 { name: 'Access-Control-Allow-Origin', value: '*' }
             )
-            const responseHeaders = info.responseHeaders
 
             return { responseHeaders }
         },
