@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Envious Extensions</title>
+    <style>
+        body { padding: 10px; }
+
+        label { display: block; margin-bottom: 5px;  }
+
+        label > span { display: inline-block; font-weight: bold; min-width: 120px; padding-right: 10px; text-align: right; }
+
+        label > input { width: 210px; }
+
+        .status { color: green; margin-top: 10px; height: 1em; }
+
+        footer { margin-top: 20px; text-align: center; }
+    </style>
+    <script src="options.js"></script>
+</head>
+
+<body>
+
+    <main>
+        <label><span>Match URL prefix</span><input name="match"></label>
+        <label><span>Replace URL prefix</span><input name="replace"></label>
+
+        <footer>
+            <button name="save">Save</button>
+            <div class="status"></div>
+        </footer>
+    </main>
+</body>
+</html>

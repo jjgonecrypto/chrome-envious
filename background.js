@@ -1,30 +1,36 @@
-const localhost = 'http://127.0.0.1:8080/static'
-const remote = 'https://cloud-dev.mongodb.com/static'
+chrome.storage.sync.get({
+    match: 'https://example.com',
+    replace: 'http://127.0.0.1:80'
+}, items => {
 
-chrome.webRequest.onHeadersReceived.addListener(
-    function(info) {
-        const redirectUrl = info.url.replace(remote, localhost)
-        console.log(`redirecting to: ${redirectUrl}`)
+    const { match, replace } = items
 
-        return { redirectUrl }
-    },
-    {
-        urls: [ `${remote}/*` ]
-    },
-    ["blocking","responseHeaders"]
-)
+    chrome.webRequest.onHeadersReceived.addListener(
+        info => {
+            const redirectUrl = info.url.replace(match, replace)
+            console.log(`redirecting to: ${redirectUrl}`)
 
-chrome.webRequest.onHeadersReceived.addListener(
-    function(info) {
-        info.responseHeaders.push(
-            { name: 'Access-Control-Allow-Origin', value: '*' }
-        )
-        const responseHeaders = info.responseHeaders
+            return { redirectUrl }
+        },
+        {
+            urls: [ `${match}/*` ]
+        },
+        ["blocking","responseHeaders"]
+    )
 
-        return { responseHeaders }
-    },
-    {
-        urls: [ `${localhost}/*` ]
-    },
-    ["blocking","responseHeaders"]
-)
+    chrome.webRequest.onHeadersReceived.addListener(
+        info => {
+            info.responseHeaders.push(
+                { name: 'Access-Control-Allow-Origin', value: '*' }
+            )
+            const responseHeaders = info.responseHeaders
+
+            return { responseHeaders }
+        },
+        {
+            urls: [ `${replace}/*` ]
+        },
+        ["blocking","responseHeaders"]
+    )
+})
+
