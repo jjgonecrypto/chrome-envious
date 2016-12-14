@@ -14,13 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.storage.sync.set({
             match: getInput('match'),
             replace: getInput('replace')
-        }, () => {
-            // Update status to let user know options were saved.
-            const status = document.querySelector('.status')
-            status.textContent = 'Options saved.'
-            setTimeout(() => {
-                status.textContent = ''
-            }, 750)
-        })
+        }, chrome.runtime.reload)
     })
 })
