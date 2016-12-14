@@ -13,6 +13,9 @@
 
   "rules": {
     "semi": [2, "never"],
-    "indent": [2, 4, { "SwitchCase": 1 }]
+    "indent": [2, 4, { "SwitchCase": 1 }],
+    "quotes": [2, "single"],
+    "no-undef": 2,
+    "no-unused-vars": 2
   }
 }

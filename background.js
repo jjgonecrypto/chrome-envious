@@ -14,7 +14,7 @@ chrome.storage.sync.get({
         {
             urls: [ `${match}/*` ]
         },
-        ["blocking","responseHeaders"]
+        ['blocking','responseHeaders']
     )
 
     chrome.webRequest.onHeadersReceived.addListener(
@@ -30,7 +30,7 @@ chrome.storage.sync.get({
         {
             urls: [ `${replace}/*` ]
         },
-        ["blocking","responseHeaders"]
+        ['blocking','responseHeaders']
     )
 })
 
