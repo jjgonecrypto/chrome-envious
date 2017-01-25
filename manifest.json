@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Chrome Envious",
+  "name": "Envious",
   "version": "1.0",
-  "description": "Run live environments against assets served from localhost",
+  "description": "Replace matching URL requests from one domain to another.",
   "background": {
     "scripts": ["background.js"]
   },
