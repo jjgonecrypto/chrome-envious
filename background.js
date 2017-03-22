@@ -5,11 +5,14 @@ chrome.storage.sync.get({
 
     const { match, replace } = items
 
+    // redirect requests for matching URLs
     chrome.webRequest.onHeadersReceived.addListener(
         info => {
             const redirectUrl = info.url.replace(match, replace)
 
-            return { redirectUrl }
+            return {
+                redirectUrl
+            }
         },
         {
             urls: [ `${match}/*` ]
@@ -17,12 +20,15 @@ chrome.storage.sync.get({
         ['blocking','responseHeaders']
     )
 
+    // ensure all requests to target domain have an open CORS response
+    // header and allow-headers for x-requested-with for XHR requests
     chrome.webRequest.onHeadersReceived.addListener(
         info => {
             const responseHeaders = info.responseHeaders
 
             responseHeaders.push(
-                { name: 'Access-Control-Allow-Origin', value: '*' }
+                { name: 'Access-Control-Allow-Origin', value: '*' },
+                { name: 'Access-Control-Allow-Headers', value: 'Origin, X-Requested-With, Content-Type, Accept' }
             )
 
             return { responseHeaders }
