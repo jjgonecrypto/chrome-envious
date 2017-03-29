@@ -13,5 +13,10 @@
     "page": "options.html",
     "chrome_style": true
   },
-  "icons": { "128": "icon-128.png" }
+  "icons": { "128": "icon-128.png" },
+  "page_action": {
+    "default_icon": {
+      "32": "icon-32.png"
+    }
+  }
 }

@@ -8,6 +8,9 @@ chrome.storage.sync.get({
     // redirect requests for matching URLs
     chrome.webRequest.onHeadersReceived.addListener(
         info => {
+            // show page action icon
+            chrome.pageAction.show(info.tabId)
+
             const redirectUrl = info.url.replace(match, replace)
 
             return {
