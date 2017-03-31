@@ -18,3 +18,4 @@ If you need to mix content - i.e. replace HTTPS requests with HTTP ones - then y
 
 ## Changelog
 - `1.1` Fixed issue where scripts loaded via ajax (XHR) would result in Chrome issuing `Request header field X-Requested-With is not allowed by Access-Control-Allow-Headers in preflight response`
+- `1.2` Icon in Chrome toolbar that highlights green when Envious has matched anything in the tab. ![image](https://cloud.githubusercontent.com/assets/799038/24532234/f496b99e-158c-11e7-8628-fa3f95aa3208.png)
