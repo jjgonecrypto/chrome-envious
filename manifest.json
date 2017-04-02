@@ -17,6 +17,8 @@
   "page_action": {
     "default_icon": {
       "32": "icon-32.png"
-    }
+    },
+    "default_title": "Envious",
+    "default_popup": "popup.html"
   }
 }
