@@ -13,7 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const writeLogs = logs => {
             document.querySelector('ul').innerHTML =
-                Object.keys(logs).map(path => `<li>${path.replace(/\?.*/,'')}</li>`).join('')
+                Object.keys(logs)
+                    .sort((a,b) => logs[a.order] > logs[b.order])
+                    .map(path => `<li>${path.replace(/\?.*/,'')}</li>`)
+                    .join('')
         }
 
         chrome.storage.sync.get('logs', ({ logs }) => writeLogs(logs[tabId]))

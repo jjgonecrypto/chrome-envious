@@ -4,6 +4,7 @@ chrome.storage.sync.get({
 }, items => {
 
     const logs = {}
+    let order = 0
     const { match, replace } = items
 
     // redirect requests for matching URLs
@@ -14,8 +15,11 @@ chrome.storage.sync.get({
 
             const redirectUrl = info.url.replace(match, replace)
 
-            const logMsg = { from: info.url, to: redirectUrl, path: redirectUrl.replace(replace, '') }
+            // persist log message for other parts of the extension
+            const logMsg = { from: info.url, order: order++, to: redirectUrl, path: redirectUrl.replace(replace, '') }
+
             logs[info.tabId] = logs[info.tabId] || {}
+
             logs[info.tabId][logMsg.path] = logMsg
 
             chrome.storage.sync.set({ logs })
