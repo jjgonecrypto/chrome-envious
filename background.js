@@ -3,6 +3,7 @@ chrome.storage.sync.get({
     replace: 'http://127.0.0.1:80'
 }, items => {
 
+    const logs = {}
     const { match, replace } = items
 
     // redirect requests for matching URLs
@@ -12,6 +13,12 @@ chrome.storage.sync.get({
             chrome.pageAction.show(info.tabId)
 
             const redirectUrl = info.url.replace(match, replace)
+
+            const logMsg = { from: info.url, to: redirectUrl, path: redirectUrl.replace(replace, '') }
+            logs[info.tabId] = logs[info.tabId] || {}
+            logs[info.tabId][logMsg.path] = logMsg
+
+            chrome.storage.sync.set({ logs })
 
             return {
                 redirectUrl
