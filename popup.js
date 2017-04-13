@@ -21,9 +21,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         chrome.storage.sync.get('logs', ({ logs }) => writeLogs(logs[tabId]))
 
+        const toggleState = (enabled) => {
+            document.querySelector('button[name=toggle]').innerHTML = enabled ? 'Pause' : 'Resume'
+            document.querySelector('h1').innerText = `Envious is ${enabled ? 'Running' : 'Paused'}`
+            if (!enabled) document.body.classList.add('disabled')
+            else document.body.classList.remove('disabled')
+        }
+
+        document.querySelector('button[name=toggle]').addEventListener('click', () => {
+            chrome.storage.sync.get('enabled', ({ enabled = true }) => {
+                toggleState(!enabled)
+                chrome.storage.sync.set({ enabled: !enabled }, () => {
+                    chrome.tabs.reload(tabId)
+                    chrome.runtime.reload()
+                })
+
+            })
+        })
+
+        chrome.storage.sync.get('enabled', ({ enabled = true }) => {
+            toggleState(enabled)
+        })
+
         chrome.storage.onChanged.addListener(function(changes) {
-            const logs = changes.logs.newValue
-            writeLogs(logs[tabId])
+            if (changes.logs) {
+                const logs = changes.logs.newValue
+                writeLogs(logs[tabId])
+            }
         })
     })
 

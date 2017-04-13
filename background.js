@@ -7,32 +7,37 @@ chrome.storage.sync.get({
     let order = 0
     const { match, replace } = items
 
-    // redirect requests for matching URLs
-    chrome.webRequest.onHeadersReceived.addListener(
-        info => {
-            // show page action icon
-            chrome.pageAction.show(info.tabId)
+    chrome.storage.sync.get('enabled', ({ enabled = true }) => {
 
-            const redirectUrl = info.url.replace(match, replace)
+        // redirect requests for matching URLs
+        chrome.webRequest.onHeadersReceived.addListener(
+            info => {
+                // show page action icon
+                chrome.pageAction.show(info.tabId)
 
-            // persist log message for other parts of the extension
-            const logMsg = { from: info.url, order: order++, to: redirectUrl, path: redirectUrl.replace(replace, '') }
+                const redirectUrl = info.url.replace(match, replace)
 
-            logs[info.tabId] = logs[info.tabId] || {}
+                // persist log message for other parts of the extension
+                const logMsg = { from: info.url, order: order++, to: redirectUrl, path: redirectUrl.replace(replace, '') }
 
-            logs[info.tabId][logMsg.path] = logMsg
+                logs[info.tabId] = logs[info.tabId] || {}
 
-            chrome.storage.sync.set({ logs })
+                logs[info.tabId][logMsg.path] = logMsg
 
-            return {
-                redirectUrl
-            }
-        },
-        {
-            urls: [ `${match}/*` ]
-        },
-        ['blocking','responseHeaders']
-    )
+                chrome.storage.sync.set({ logs })
+
+                if (!enabled) return {}
+
+                return {
+                    redirectUrl
+                }
+            },
+            {
+                urls: [ `${match}/*` ]
+            },
+            ['blocking','responseHeaders']
+        )
+    })
 
     // ensure all requests to target domain have an open CORS response
     // header and allow-headers for x-requested-with for XHR requests

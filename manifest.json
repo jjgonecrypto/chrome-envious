@@ -7,7 +7,7 @@
     "scripts": ["background.js"]
   },
   "permissions": [
-    "storage", "webRequestBlocking", "webRequest", "*://*/*"
+    "storage", "webRequestBlocking", "webRequest", "tabs", "*://*/*"
   ],
   "options_ui": {
     "page": "options.html",
