@@ -1,11 +1,12 @@
 chrome.storage.sync.get({
     match: 'https://example.com',
-    replace: 'http://127.0.0.1:80'
+    replace: 'http://127.0.0.1:80',
+    checkbox: 'off',
 }, items => {
 
     const logs = {}
     let order = 0
-    const { match, replace } = items
+    const { match, replace, checkbox } = items
 
     // redirect requests for matching URLs
     chrome.webRequest.onHeadersReceived.addListener(
@@ -13,7 +14,11 @@ chrome.storage.sync.get({
             // show page action icon
             chrome.pageAction.show(info.tabId)
 
-            const redirectUrl = info.url.replace(match, replace)
+            let redirectUrl = info.url.replace(match, replace);
+
+            if (checkbox) {
+                redirectUrl = redirectUrl.replace(/\.min/, '');
+            }
 
             // persist log message for other parts of the extension
             const logMsg = { from: info.url, order: order++, to: redirectUrl, path: redirectUrl.replace(replace, '') }
@@ -53,4 +58,3 @@ chrome.storage.sync.get({
         ['blocking','responseHeaders']
     )
 })
-

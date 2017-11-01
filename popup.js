@@ -2,10 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Use default value color = 'red' and likesColor = true.
     chrome.storage.sync.get({
         match: 'https://example.com',
-        replace: 'http://127.0.0.1:80'
+        replace: 'http://127.0.0.1:80',
+        checkbox: 'off',
     }, items => {
         document.querySelector('var.js-match').innerHTML = items.match
         document.querySelector('var.js-replace').innerHTML = items.replace
+        document.querySelector('var.js-debug').innerHTML = items.checkbox
     })
 
     chrome.tabs.query({active: true, currentWindow: true}, tabs => {
