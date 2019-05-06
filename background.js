@@ -13,7 +13,7 @@ chrome.storage.sync.get({
             // show page action icon
             chrome.pageAction.show(info.tabId)
 
-            const redirectUrl = info.url.replace(match, replace)
+            const redirectUrl = info.url.replace(match, replace).replace('.min.', '.')
 
             // persist log message for other parts of the extension
             const logMsg = { from: info.url, order: order++, to: redirectUrl, path: redirectUrl.replace(replace, '') }
